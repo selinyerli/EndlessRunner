@@ -1,4 +1,5 @@
-using Unity.VisualScripting;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
@@ -11,8 +12,11 @@ public class PlayerMove : MonoBehaviour
     {
         transform.Translate(Vector3.forward * Time.deltaTime * moveSpeed, Space.World);
 
+        Vector3 currentPosition = transform.position;
 
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)); 
+
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+
         {
             if(this.gameObject.transform.position.x > LevelBoundary.leftSide)
             {
@@ -20,13 +24,17 @@ public class PlayerMove : MonoBehaviour
             }
             
         }
-        if(Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow));
+        if(Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
             if (this.gameObject.transform.position.x < LevelBoundary.rightSide)
             {
-                transform.Translate(Vector3.right * Time.deltaTime * LeftRightSpeed * -1);
+                transform.Translate(Vector3.right * Time.deltaTime * LeftRightSpeed);
             }
                 
         }
+
+        Vector3 clampedPosition = transform.position;
+        clampedPosition.x = Mathf.Clamp(clampedPosition.x, LevelBoundary.leftSide, LevelBoundary.rightSide);
+        transform.position = clampedPosition;
     }
 }
