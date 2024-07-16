@@ -6,6 +6,7 @@ public class PlayerMove : MonoBehaviour
 {
     public float moveSpeed = 3;
     public float LeftRightSpeed = 4;
+    static public bool CanMove = false;
 
 
     private void Update()
@@ -14,27 +15,29 @@ public class PlayerMove : MonoBehaviour
 
         Vector3 currentPosition = transform.position;
 
-
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-
+        if (CanMove == true)
         {
-            if(this.gameObject.transform.position.x > LevelBoundary.leftSide)
-            {
-                transform.Translate(Vector3.left * Time.deltaTime * LeftRightSpeed);
-            }
-            
-        }
-        if(Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-        {
-            if (this.gameObject.transform.position.x < LevelBoundary.rightSide)
-            {
-                transform.Translate(Vector3.right * Time.deltaTime * LeftRightSpeed);
-            }
-                
-        }
+            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
 
-        Vector3 clampedPosition = transform.position;
-        clampedPosition.x = Mathf.Clamp(clampedPosition.x, LevelBoundary.leftSide, LevelBoundary.rightSide);
-        transform.position = clampedPosition;
+            {
+                if (this.gameObject.transform.position.x > LevelBoundary.leftSide)
+                {
+                    transform.Translate(Vector3.left * Time.deltaTime * LeftRightSpeed);
+                }
+
+            }
+            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+            {
+                if (this.gameObject.transform.position.x < LevelBoundary.rightSide)
+                {
+                    transform.Translate(Vector3.right * Time.deltaTime * LeftRightSpeed);
+                }
+
+            }
+
+            Vector3 clampedPosition = transform.position;
+            clampedPosition.x = Mathf.Clamp(clampedPosition.x, LevelBoundary.leftSide, LevelBoundary.rightSide);
+            transform.position = clampedPosition;
+        }
     }
 }
