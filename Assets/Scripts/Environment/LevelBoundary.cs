@@ -3,8 +3,8 @@ using UnityEngine.Rendering;
 
 public class LevelBoundary : MonoBehaviour
 {
-    public static float leftSide = -2.3f;
-    public static float rightSide = 2.3f;
+    public static float leftSide = -7f;
+    public static float rightSide = 4f;
     public float internalLeft;
     public float internalRight;
 
