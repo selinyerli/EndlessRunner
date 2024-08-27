@@ -8,24 +8,45 @@ public class LevelDistance : MonoBehaviour
     public GameObject disDisplay;
     public GameObject disEndDisplay;
     public int disRun;
-    public bool addingDis = false;
     public float disDelay = 0.35f;
+    private Text disDisplayText;
+    private Text disEndDisplayText;
+    private float timer;
+    private bool startCounting = false;
 
-    public void Update()
+    private void Start()
     {
-        if (addingDis == false)
+        // Cache the Text components
+        disDisplayText = disDisplay.GetComponent<Text>();
+        disEndDisplayText = disEndDisplay.GetComponent<Text>();
+
+        // Start the coroutine to delay the counting
+        StartCoroutine(StartCountingAfterDelay());
+    }
+
+    private void Update()
+    {
+        if (startCounting)
         {
-            addingDis = true;
-            StartCoroutine(AddingDis());
+            // Increment the timer
+            timer += Time.deltaTime;
+            // Check if the delay has passed
+            if (timer >= disDelay)
+            {
+                // Increment distance
+                disRun += 1;
+                // Update the UI
+                disDisplayText.text = disRun.ToString();
+                disEndDisplayText.text = disRun.ToString();
+                // Reset the timer
+                timer = 0f;
+            }
         }
     }
 
-    IEnumerator AddingDis()
+    private IEnumerator StartCountingAfterDelay()
     {
-        disRun += 1;
-        disDisplay.GetComponent<Text>().text = "" + disRun;
-        disEndDisplay.GetComponent<Text>().text = "" + disRun;
-        yield return new WaitForSeconds(disDelay);
-        addingDis = false;
+        yield return new WaitForSeconds(5f);
+        startCounting = true;
     }
 }
